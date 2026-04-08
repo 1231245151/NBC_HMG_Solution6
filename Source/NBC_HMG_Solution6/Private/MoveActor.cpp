@@ -1,5 +1,4 @@
 #include "MoveActor.h"
-#include "MoveActorComponent.h"
 
 // Sets default values
 AMoveActor::AMoveActor()

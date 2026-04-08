@@ -13,6 +13,7 @@ URotationActorComponent::URotationActorComponent()
 	SpinRotator = FRotator(0.f, 1.f, 0.f);
 	SpinSpeed = 300.f;
 
+	Isdestroy = false;
 }
 
 
@@ -21,6 +22,10 @@ void URotationActorComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	
+
+	// 삭제 타이머 설정
+	if(Isdestroy)
+		GetWorld()->GetTimerManager().SetTimer(Timehandle, this, &URotationActorComponent::destroy, 3.0f, true);
 }
 
 
@@ -33,5 +38,10 @@ void URotationActorComponent::TickComponent(float DeltaTime, ELevelTick TickType
 	{
 		GetOwner()->AddActorWorldRotation(SpinRotator * SpinSpeed * DeltaTime);
 	}
+}
+
+void URotationActorComponent::destroy()
+{
+	GetOwner()->Destroy();
 }
 

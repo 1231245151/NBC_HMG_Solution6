@@ -1,12 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+#include "MoveActorComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "MoveActor.generated.h"
 
-class UMoveActorComponent;
 
 UCLASS()
 class NBC_HMG_SOLUTION6_API AMoveActor : public AActor
@@ -34,5 +33,13 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	void SetVecDir(FVector& _vec) { MovementComp->SetVecDir(_vec); }
+	void SetMaxDistance(float _dist) { MovementComp->SetMaxDistance(_dist); }
+	void SetMoveSpeed(float _speed) { MovementComp->SetMoveSpeed(_speed); }
+	void SetIsRoof(bool _true) { MovementComp->SetIsRoof(_true); }
+	void SetIsWarp(bool _true) { MovementComp->SetIsWarp(_true); }
+	void Isdestroy(bool _true) { MovementComp->SetIsdestroy(_true); }
+
 
 };

@@ -1,6 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "MoveActorComponent.h"
 
 // Sets default values for this component's properties
@@ -18,6 +15,12 @@ UMoveActorComponent::UMoveActorComponent()
 	IsArrival = false;
 	IsRoof = true;
 	IsReturnbase = false;
+
+
+	IsWarp = false;
+	warpDist = 300.f;
+
+	Isdestroy = false;
 }
 
 
@@ -27,6 +30,15 @@ void UMoveActorComponent::BeginPlay()
 	Super::BeginPlay();
 
 	StartLocation = GetOwner()->GetActorLocation();
+
+	// 워프활성화시 타이머 설정
+	// 1초마다 워프함
+	if(IsWarp)
+		GetWorld()->GetTimerManager().SetTimer(Timehandle, this, &UMoveActorComponent::Warp, 1.0f, true);
+
+	// 삭제 타이머 설정
+	if(Isdestroy)
+		GetWorld()->GetTimerManager().SetTimer(DestroyTimerHandle, this, &UMoveActorComponent::destroy, 3.0f, true);
 }
 
 
@@ -38,9 +50,22 @@ void UMoveActorComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	Movement(DeltaTime);
 }
 
+void UMoveActorComponent::Warp()
+{
+	// x기준으로 이동
+	GetOwner()->AddActorWorldOffset(FVector(warpDist, 0.f, 0.f));
+
+	// 시작 기준점 이동
+	StartLocation = GetOwner()->GetActorLocation();
+}
+
+void UMoveActorComponent::destroy()
+{
+	GetOwner()->Destroy();
+}
+
 void UMoveActorComponent::Movement(float DeltaTime)
 {
-
 	// 이동처리
 	if (!FMath::IsNearlyZero(MoveSpeed))
 	{

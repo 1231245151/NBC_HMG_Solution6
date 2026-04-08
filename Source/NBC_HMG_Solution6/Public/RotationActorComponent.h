@@ -18,6 +18,13 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom|Rotation Settings", meta = (ClampMin = "0.0", UIMin = "0.0"))
 	float SpinSpeed;
 
+
+	// ·£´ý ±¸Çö
+	FTimerHandle Timehandle;
+
+	// ÆÄ±« È°¼º
+	bool Isdestroy;
+
 public:	
 	// Sets default values for this component's properties
 	URotationActorComponent();
@@ -30,5 +37,6 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	void destroy();
 		
 };
